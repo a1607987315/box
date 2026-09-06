@@ -7,15 +7,15 @@ const routes = [
     component: MainLayout,
     redirect: '/dashboard',
     children: [
-      { path: 'dashboard', name: 'Dashboard', component: () => import('../views/dashboard/Index.vue'), meta: { title: '首页' } },
-      { path: 'products', name: 'Products', component: () => import('../views/products/Index.vue'), meta: { title: '商品管理' } },
+      { path: 'dashboard', name: 'Dashboard', component: () => import('../views/dashboard/Index.vue'), meta: { title: '首页工作台' } },
+      { path: 'products', name: 'Products', component: () => import('../views/products/Index.vue'), meta: { title: '商品列表' } },
       { path: 'suppliers', name: 'Suppliers', component: () => import('../views/suppliers/Index.vue'), meta: { title: '供应商' } },
       { path: 'customers', name: 'Customers', component: () => import('../views/customers/Index.vue'), meta: { title: '客户管理' } },
       { path: 'warehouses', name: 'Warehouses', component: () => import('../views/warehouses/Index.vue'), meta: { title: '仓库管理' } },
       { path: 'purchases', name: 'Purchases', component: () => import('../views/purchases/Index.vue'), meta: { title: '采购单' } },
       { path: 'purchases/new', name: 'PurchaseNew', component: () => import('../views/purchases/Form.vue'), meta: { title: '新建采购单' } },
       { path: 'purchases/:id', name: 'PurchaseDetail', component: () => import('../views/purchases/Detail.vue'), meta: { title: '采购单详情' } },
-      { path: 'sales', name: 'Sales', component: () => import('../views/sales/Index.vue'), meta: { title: '销售单' } },
+      { path: 'sales', name: 'Sales', component: () => import('../views/sales/Index.vue'), meta: { title: '销售订单' } },
       { path: 'sales/new', name: 'SalesNew', component: () => import('../views/sales/Form.vue'), meta: { title: '新建销售单' } },
       { path: 'sales/:id', name: 'SalesDetail', component: () => import('../views/sales/Detail.vue'), meta: { title: '销售单详情' } },
       { path: 'quotations', redirect: '/sales' },
@@ -43,7 +43,7 @@ const router = createRouter({
 })
 
 router.afterEach((to) => {
-  document.title = to.meta.title ? `${to.meta.title} - 供销存管理系统` : '供销存管理系统'
+  document.title = to.meta.title ? `${to.meta.title} · StockBox` : '进销存管理 · StockBox'
 })
 
 export default router

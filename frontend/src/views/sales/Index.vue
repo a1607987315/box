@@ -8,7 +8,7 @@
         <el-option label="已取消" value="cancelled" />
       </el-select>
       <el-button type="primary" @click="load">查询</el-button>
-      <el-button type="success" @click="$router.push('/sales/new')">新建销售单</el-button>
+      <el-button type="success" @click="$router.push('/sales/new')">+ 新建销售单</el-button>
     </div>
     <el-table :data="list" stripe>
       <el-table-column prop="orderNo" label="单号" width="200" />

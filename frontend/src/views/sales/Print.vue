@@ -1,13 +1,13 @@
 <template>
   <div class="sheet" v-if="order">
-    <h2>销售单 / 报价单</h2>
+    <h2>销售单</h2>
     <table class="meta">
       <tr>
         <td>单号</td><td>{{ order.orderNo }}</td>
         <td>日期</td><td>{{ (order.createdAt || '').slice(0, 10) }}</td>
       </tr>
       <tr>
-        <td>客户</td><td>{{ order.Customer?.name }}</td>
+        <td>客户名称</td><td>{{ order.Customer?.name }}</td>
         <td>联系人</td><td>{{ order.Customer?.contact }} {{ order.Customer?.phone }}</td>
       </tr>
       <tr>
@@ -19,13 +19,13 @@
       <thead>
         <tr>
           <th class="c" width="50">序号</th>
-          <th width="110">SKU编号</th>
-          <th>商品名称</th>
-          <th width="90">规格</th>
+          <th width="110">SKU</th>
+          <th>商品名</th>
+          <th width="90">规格/型号</th>
           <th class="c" width="60">单位</th>
           <th class="r" width="80">数量</th>
           <th class="r" width="90">单价</th>
-          <th class="r" width="100">金额</th>
+          <th class="r" width="100">小计</th>
         </tr>
       </thead>
       <tbody>
@@ -44,15 +44,15 @@
           <td class="r">{{ formatMoney(order.totalAmount) }}</td>
         </tr>
         <tr class="sum">
-          <td colspan="7" class="r">运费</td>
+          <td colspan="7" class="r">运费(元)</td>
           <td class="r">{{ formatMoney(order.freight) }}</td>
         </tr>
         <tr class="sum">
-          <td colspan="7" class="r">折扣</td>
+          <td colspan="7" class="r">整单折扣</td>
           <td class="r">{{ formatMoney(order.discountAmount) }}</td>
         </tr>
         <tr class="sum total">
-          <td colspan="7" class="r">应收金额</td>
+          <td colspan="7" class="r">折后应收</td>
           <td class="r">{{ formatMoney(order.receivableAmount) }}</td>
         </tr>
       </tbody>

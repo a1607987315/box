@@ -3,7 +3,7 @@
     <div class="toolbar">
       <el-input v-model="keyword" placeholder="搜索编号/名称" clearable style="width: 240px" @keyup.enter="load" />
       <el-button type="primary" @click="load">查询</el-button>
-      <el-button type="success" @click="open()">新增商品</el-button>
+      <el-button type="success" @click="open()">+ 新增商品</el-button>
     </div>
     <el-table :data="list" stripe>
       <el-table-column prop="code" label="SKU编号" width="120" />

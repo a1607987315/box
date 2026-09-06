@@ -11,8 +11,9 @@
           <el-option v-for="w in warehouses" :key="w.id" :label="w.name" :value="w.id" />
         </el-select>
       </el-form-item>
-      <el-form-item label="运费"><el-input-number v-model="form.freight" :min="0" :precision="2" /></el-form-item>
-      <el-form-item label="折扣类型">
+      <el-form-item label="客户规格"><el-input v-model="form.customerSpec" style="width: 280px" placeholder="选客户自动带出，可修改" /></el-form-item>
+      <el-form-item label="运费(元)"><el-input-number v-model="form.freight" :min="0" :precision="2" /></el-form-item>
+      <el-form-item label="整单折扣">
         <el-radio-group v-model="form.discountType">
           <el-radio label="none">无</el-radio>
           <el-radio label="rate">折扣率%</el-radio>
@@ -64,7 +65,7 @@
     </el-table>
     <div class="bar">
       <el-button @click="form.items.push(emptyItem())">加一行</el-button>
-      <span>商品合计 {{ goodsTotal }}　运费 {{ form.freight }}　折扣 {{ discountAmt }}　应收 {{ receivable }}</span>
+      <span class="sum">商品合计 {{ money(goodsTotal) }}　运费 {{ money(form.freight) }}　整单折扣 {{ money(discountAmt) }}　折后应收 ¥{{ money(receivable) }}</span>
       <el-button type="primary" @click="submit">保存销售单</el-button>
     </div>
   </el-card>
@@ -82,7 +83,7 @@ const customers = ref([])
 const warehouses = ref([])
 const currentCustomer = ref(null)
 const form = reactive({
-  customerId: null, warehouseId: null, freight: 0,
+  customerId: null, warehouseId: null, freight: 0, customerSpec: '',
   discountType: 'none', discountValue: 0, remark: '', items: [emptyItem()]
 })
 
@@ -91,6 +92,10 @@ function emptyItem() {
 }
 function onCustomer() {
   currentCustomer.value = customers.value.find((c) => c.id === form.customerId)
+  form.customerSpec = currentCustomer.value?.name || ''
+}
+function money(v) {
+  return Number(v || 0).toFixed(2)
 }
 async function onProduct(row) {
   const p = products.value.find((x) => x.id === row.productId)
@@ -142,4 +147,5 @@ onMounted(async () => {
 </script>
 <style scoped>
 .bar { margin-top: 12px; display: flex; align-items: center; gap: 16px; }
+.sum { margin-left: auto; font-weight: 700; }
 </style>
