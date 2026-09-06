@@ -1,0 +1,26 @@
+services:
+  backend:
+    build:
+      context: ./backend
+    container_name: erp-backend
+    restart: unless-stopped
+    volumes:
+      - erp-data:/app/data
+    environment:
+      PORT: 3000
+      DB_PATH: /app/data/erp.db
+    expose:
+      - "3000"
+
+  web:
+    build:
+      context: ./frontend
+    container_name: erp-web
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+
+volumes:
+  erp-data:
