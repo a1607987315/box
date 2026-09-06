@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="welcome">进销存一体 · 采购、销售、库存、财务闭环</div>
+    <div class="welcome">采购、销售、库存、财务联动</div>
     <el-row :gutter="16">
       <el-col :span="6" v-for="card in cards" :key="card.label">
         <el-card shadow="hover" class="stat" @click="$router.push(card.to)">

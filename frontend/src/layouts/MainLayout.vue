@@ -2,7 +2,7 @@
   <el-container class="layout">
     <el-aside :width="collapsed ? '64px' : '220px'" class="aside">
       <div class="logo" @click="$router.push('/dashboard')">
-        <span v-if="!collapsed">StockBox</span>
+        <span v-if="!collapsed">供销存</span>
         <span v-else>SB</span>
       </div>
       <el-menu
@@ -61,7 +61,7 @@
     <el-container>
       <el-header class="header">
         <el-icon class="fold" @click="collapsed = !collapsed"><Fold v-if="!collapsed" /><Expand v-else /></el-icon>
-        <span class="crumb">进销存管理 · StockBox</span>
+        <span class="crumb">供销存管理系统</span>
         <span class="spacer" />
         <span class="title">{{ $route.meta.title || '工作台' }}</span>
       </el-header>
