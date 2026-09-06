@@ -8,15 +8,15 @@
         <el-option label="已取消" value="cancelled" />
       </el-select>
       <el-button type="primary" @click="load">查询</el-button>
-      <el-button type="success" @click="$router.push('/sales/new')">新建销售订单</el-button>
+      <el-button type="success" @click="$router.push('/sales/new')">新建销售单</el-button>
     </div>
     <el-table :data="list" stripe>
       <el-table-column prop="orderNo" label="单号" width="200" />
       <el-table-column label="客户"><template #default="{ row }">{{ row.Customer?.name }}</template></el-table-column>
-      <el-table-column prop="totalAmount" label="商品金额" width="110" />
-      <el-table-column prop="freight" label="运费" width="90" />
-      <el-table-column prop="discountAmount" label="折扣" width="90" />
-      <el-table-column prop="receivableAmount" label="应收" width="110" />
+      <el-table-column prop="totalAmount" label="商品金额" width="110" align="right" />
+      <el-table-column prop="freight" label="运费" width="90" align="right" />
+      <el-table-column prop="discountAmount" label="折扣" width="90" align="right" />
+      <el-table-column prop="receivableAmount" label="应收" width="110" align="right" />
       <el-table-column prop="status" label="状态" width="90">
         <template #default="{ row }">{{ { pending: '待出库', shipped: '已出库', cancelled: '已取消', draft: '草稿' }[row.status] }}</template>
       </el-table-column>

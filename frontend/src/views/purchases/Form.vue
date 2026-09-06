@@ -14,6 +14,9 @@
       <el-form-item label="备注"><el-input v-model="form.remark" style="width: 480px" /></el-form-item>
     </el-form>
     <el-table :data="form.items" border>
+      <el-table-column label="SKU编号" width="120">
+        <template #default="{ row }">{{ row.sku }}</template>
+      </el-table-column>
       <el-table-column label="商品" min-width="220">
         <template #default="{ row }">
           <el-select v-model="row.productId" filterable @change="onProduct(row)">
@@ -34,8 +37,8 @@
           <el-input-number v-model="row.unitPrice" :min="0" :precision="2" @change="calc(row)" />
         </template>
       </el-table-column>
-      <el-table-column label="金额" width="110">
-        <template #default="{ row }">{{ row.amount }}</template>
+      <el-table-column label="金额" width="110" align="right">
+        <template #default="{ row }">{{ Number(row.amount || 0).toFixed(2) }}</template>
       </el-table-column>
       <el-table-column label="" width="80">
         <template #default="{ $index }">
@@ -64,11 +67,12 @@ const warehouses = ref([])
 const form = reactive({ supplierId: null, warehouseId: null, remark: '', items: [emptyItem()] })
 
 function emptyItem() {
-  return { productId: null, unit: '', quantity: 1, unitPrice: 0, amount: 0 }
+  return { productId: null, sku: '', unit: '', quantity: 1, unitPrice: 0, amount: 0 }
 }
 function onProduct(row) {
   const p = products.value.find((x) => x.id === row.productId)
   if (!p) return
+  row.sku = p.code
   row.unit = p.purchaseUnit || p.baseUnit
   row.unitPrice = Number(p.costPrice) * Number(p.purchaseRatio || 1)
   calc(row)

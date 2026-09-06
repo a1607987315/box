@@ -25,6 +25,9 @@
       <el-form-item label="备注"><el-input v-model="form.remark" style="width: 480px" /></el-form-item>
     </el-form>
     <el-table :data="form.items" border>
+      <el-table-column label="SKU编号" width="120">
+        <template #default="{ row }">{{ row.sku }}</template>
+      </el-table-column>
       <el-table-column label="商品" min-width="220">
         <template #default="{ row }">
           <el-select v-model="row.productId" filterable @change="onProduct(row)">
@@ -50,7 +53,9 @@
           </el-button>
         </template>
       </el-table-column>
-      <el-table-column label="金额" width="100"><template #default="{ row }">{{ row.amount }}</template></el-table-column>
+      <el-table-column label="金额" width="110" align="right">
+        <template #default="{ row }">{{ Number(row.amount || 0).toFixed(2) }}</template>
+      </el-table-column>
       <el-table-column width="70">
         <template #default="{ $index }">
           <el-button link type="danger" @click="form.items.splice($index, 1)">删</el-button>
@@ -60,7 +65,7 @@
     <div class="bar">
       <el-button @click="form.items.push(emptyItem())">加一行</el-button>
       <span>商品合计 {{ goodsTotal }}　运费 {{ form.freight }}　折扣 {{ discountAmt }}　应收 {{ receivable }}</span>
-      <el-button type="primary" @click="submit">保存销售订单</el-button>
+      <el-button type="primary" @click="submit">保存销售单</el-button>
     </div>
   </el-card>
 </template>
@@ -82,7 +87,7 @@ const form = reactive({
 })
 
 function emptyItem() {
-  return { productId: null, unit: '', quantity: 1, unitPrice: 0, amount: 0, history: [] }
+  return { productId: null, sku: '', unit: '', quantity: 1, unitPrice: 0, amount: 0, history: [] }
 }
 function onCustomer() {
   currentCustomer.value = customers.value.find((c) => c.id === form.customerId)
@@ -90,6 +95,7 @@ function onCustomer() {
 async function onProduct(row) {
   const p = products.value.find((x) => x.id === row.productId)
   if (!p) return
+  row.sku = p.code
   row.unit = p.salesUnit || p.baseUnit
   const level = currentCustomer.value?.level
   row.unitPrice = Number(level === 'wholesale' ? p.wholesalePrice : p.salesPrice) * Number(p.salesRatio || 1)
@@ -121,7 +127,7 @@ const receivable = computed(() => Math.round((goodsTotal.value + Number(form.fre
 async function submit() {
   if (!form.customerId || !form.warehouseId) return ElMessage.warning('请选择客户和仓库')
   const items = form.items.filter((i) => i.productId)
-  if (!items.length) return ElMessage.warning('请添加商品')
+  if (!items.length) return ElMessage.warning('请选择商品，SKU编号必选')
   const res = await http.post('/sales', { ...form, items })
   ElMessage.success('已保存')
   router.push(`/sales/${res.data.id}`)

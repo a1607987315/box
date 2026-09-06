@@ -5,16 +5,17 @@
       <div>
         <el-tag>{{ { pending: '待出库', shipped: '已出库', cancelled: '已取消', draft: '草稿' }[order.status] }}</el-tag>
         <el-button v-if="order.status === 'pending'" type="success" class="ml" @click="ship">确认出库</el-button>
-        <el-button class="ml" @click="print">打印</el-button>
+        <el-button class="ml" type="primary" @click="print">打印销售单</el-button>
       </div>
     </div>
     <p>客户：{{ order.Customer?.name }}　仓库：{{ order.Warehouse?.name }}</p>
     <p>商品金额 {{ order.totalAmount }}　运费 {{ order.freight }}　折扣 {{ order.discountAmount }}　应收 {{ order.receivableAmount }}</p>
     <el-table :data="order.items || []" border>
+      <el-table-column label="SKU编号" width="120"><template #default="{ row }">{{ row.Product?.code }}</template></el-table-column>
       <el-table-column label="商品"><template #default="{ row }">{{ row.Product?.name }}</template></el-table-column>
-      <el-table-column prop="quantity" label="数量" width="100" />
-      <el-table-column prop="unitPrice" label="单价" width="100" />
-      <el-table-column prop="amount" label="金额" width="100" />
+      <el-table-column prop="quantity" label="数量" width="100" align="right" />
+      <el-table-column prop="unitPrice" label="单价" width="100" align="right" />
+      <el-table-column prop="amount" label="金额" width="110" align="right" />
     </el-table>
   </el-card>
 </template>

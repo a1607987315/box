@@ -15,12 +15,12 @@ const routes = [
       { path: 'purchases', name: 'Purchases', component: () => import('../views/purchases/Index.vue'), meta: { title: '采购单' } },
       { path: 'purchases/new', name: 'PurchaseNew', component: () => import('../views/purchases/Form.vue'), meta: { title: '新建采购单' } },
       { path: 'purchases/:id', name: 'PurchaseDetail', component: () => import('../views/purchases/Detail.vue'), meta: { title: '采购单详情' } },
-      { path: 'sales', name: 'Sales', component: () => import('../views/sales/Index.vue'), meta: { title: '销售订单' } },
-      { path: 'sales/new', name: 'SalesNew', component: () => import('../views/sales/Form.vue'), meta: { title: '新建销售订单' } },
-      { path: 'sales/:id', name: 'SalesDetail', component: () => import('../views/sales/Detail.vue'), meta: { title: '销售订单详情' } },
-      { path: 'quotations', name: 'Quotations', component: () => import('../views/quotations/Index.vue'), meta: { title: '报价单' } },
-      { path: 'quotations/new', name: 'QuotationNew', component: () => import('../views/quotations/Form.vue'), meta: { title: '新建报价单' } },
-      { path: 'quotations/:id', name: 'QuotationDetail', component: () => import('../views/quotations/Detail.vue'), meta: { title: '报价单详情' } },
+      { path: 'sales', name: 'Sales', component: () => import('../views/sales/Index.vue'), meta: { title: '销售单' } },
+      { path: 'sales/new', name: 'SalesNew', component: () => import('../views/sales/Form.vue'), meta: { title: '新建销售单' } },
+      { path: 'sales/:id', name: 'SalesDetail', component: () => import('../views/sales/Detail.vue'), meta: { title: '销售单详情' } },
+      { path: 'quotations', redirect: '/sales' },
+      { path: 'quotations/new', redirect: '/sales/new' },
+      { path: 'quotations/:id', redirect: '/sales' },
       { path: 'inventory', name: 'Inventory', component: () => import('../views/inventory/Index.vue'), meta: { title: '库存查询' } },
       { path: 'inventory/transactions', name: 'InventoryTx', component: () => import('../views/inventory/Transactions.vue'), meta: { title: '库存流水' } },
       { path: 'payments', name: 'Payments', component: () => import('../views/payments/Index.vue'), meta: { title: '收付款' } }
@@ -33,8 +33,7 @@ const routes = [
   },
   {
     path: '/print/quotations/:id',
-    name: 'PrintQuotation',
-    component: () => import('../views/quotations/Print.vue')
+    redirect: (to) => `/print/sales/${to.params.id}`
   }
 ]
 

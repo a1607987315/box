@@ -35,7 +35,13 @@ router.get('/:id', async (req, res) => {
 
 router.post('/', async (req, res) => {
   try {
-    const product = await Product.create(req.body);
+    const code = String(req.body.code || '').trim();
+    const name = String(req.body.name || '').trim();
+    if (!code) return res.status(400).json({ code: 1, message: 'SKU编号必填' });
+    if (!name) return res.status(400).json({ code: 1, message: '商品名称必填' });
+    const exist = await Product.findOne({ where: { code } });
+    if (exist) return res.status(400).json({ code: 1, message: 'SKU编号已存在' });
+    const product = await Product.create({ ...req.body, code, name });
     res.json({ code: 0, data: product });
   } catch (err) {
     res.status(500).json({ code: 1, message: err.message });

@@ -23,8 +23,7 @@
             <span>进销业务</span>
           </template>
           <el-menu-item index="/purchases">采购单</el-menu-item>
-          <el-menu-item index="/quotations">报价单</el-menu-item>
-          <el-menu-item index="/sales">销售订单</el-menu-item>
+          <el-menu-item index="/sales">销售单</el-menu-item>
         </el-sub-menu>
         <el-sub-menu index="stock">
           <template #title>
